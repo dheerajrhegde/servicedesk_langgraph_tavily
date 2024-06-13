@@ -59,7 +59,7 @@ def create_servicenow_incident(short_description, description):
                                        "assignment_group": "fe2b38b4837a02107ede20d0deaad342"
                                        }), verify=False)
     if response.status_code == 201:
-        return json.loads(response.text)['result']['number']
+        return json.loads(response.text)['result']['number'], json.loads(response.text)['result']['number']
     else:
         return response.text
 

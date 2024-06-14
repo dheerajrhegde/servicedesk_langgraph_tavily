@@ -205,5 +205,11 @@ def image_to_base64(image_path):
     base64_string_with_prefix = f"data:{mime_type};base64, {encoded_string}"
     return base64_string_with_prefix
 
+def image_bytes_to_base64(bytes):
+    # Construct the Base64 string with the data URI scheme
+    encoded_string = base64.b64encode(bytes).decode('utf-8')
+    base64_string_with_prefix = f"data:image/png;base64, {encoded_string}"
+    return base64_string_with_prefix
+
 def getAgent():
     return abot

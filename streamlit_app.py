@@ -90,13 +90,12 @@ else:
             user = st.text_input("Your name", key="name", max_chars=50, value=data["entry"][0]["resource"]["name"][0]["given"][0])
             user_query = st.text_input("Message", key="user_query", max_chars=500)
             send_button = st.form_submit_button("Send")
+            send_image = st.file_uploader("Choose a file")
 
-            if send_button and user_query:
-                print("inside if")
-                add_message(user, user_query)
-                valid_extensions = ('.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tiff', '.webp')
-                if user_query.endswith(valid_extensions):
-                    image_data = tools_agents.image_to_base64(user_query)
+            if send_button and  ( send_image or user_query):
+                if send_image:
+                    bytes_data = send_image.getvalue()
+                    user_query = tools_agents.image_to_base64(bytes_data)
                     messages = [HumanMessage(
                         content=[
                             {"type": "text",
@@ -108,7 +107,6 @@ else:
                         ],
                     )]
                 else:
-                    print("inside else block")
                     messages = [tools_agents.HumanMessage(content=user_query)]
 
                 result = st.session_state.abot.graph.invoke({"messages": messages}, st.session_state.thread)

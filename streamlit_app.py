@@ -1,4 +1,4 @@
-import tools_agents, datetime, os
+import tools_agents, datetime, os, requests, json
 from langchain_core.messages import HumanMessage
 import streamlit as st
 from streamlit_oauth import OAuth2Component
@@ -35,6 +35,12 @@ if 'token' not in st.session_state:
     st.session_state.token = result.get('token')
     st.rerun()
 else:
+
+    url = "https://fhir.cigna.com/Patient?_id" + st.session_state.token
+    jsonString = requests.get(url)
+    data = json.loads(jsonString.content)
+    print(data)
+
     # Initialize session state to store chat messages
     if "user_queries" not in st.session_state:
         st.session_state["user_queries"] = []

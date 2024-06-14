@@ -43,6 +43,17 @@ else:
     jsonString = requests.get(url, headers=headers)
     data = json.loads(jsonString.content)
     st.write(st.session_state.token["access_token"])
+    st.write(data["patient"]["valueString"])
+    user_id = data["patient"]["valueString"]
+
+    headers = {"Authorization":
+                   f"Bearer {token}"
+               }
+
+    url = "https://fhir.cigna.com/Patient/"+user_id
+    print(url)
+    jsonString = requests.get(url, headers=headers)
+    data = json.loads(jsonString.content)
     st.write(data)
 
     # Initialize session state to store chat messages

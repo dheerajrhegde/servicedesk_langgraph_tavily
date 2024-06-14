@@ -12,6 +12,29 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
+markdown="""
+## Overview
+
+This application is designed to provide automated support for users' technical issues by:
+- Raising ServiceNow tickets.
+- Creating knowledge articles based on resolved queries.
+- Using a Language Model (LLM) for intelligent responses.
+- Fetching the latest information on technical topics.
+
+## Cigna API Integration
+- Use CIgna Authorization API endpoint to authenticate user
+- Use Cigna Patient Access API to get user information
+
+## Tech Stack
+
+- **Streamlit**: For building the interactive web application.
+- **Langchain**: To extend the capabilities of the LLM with tools.
+- **LangGraph**: For managing workflows and integrations.
+- **OpenAI**: For natural language processing and responses.
+- **ServiceNow Cloud APIs**: For ticketing and knowledge management.
+- **Tavily**: For real-time web search and information retrieval.
+"""
+
 CLIENT_ID = os.environ.get("CIGNA_CLIENT_ID")
 CLIENT_SECRET = os.environ.get("CIGNA_CLIENT_SECRET")
 AUTHORIZE_ENDPOINT = "https://r-hi2.cigna.com/mga/sps/oauth/oauth20/authorize"
@@ -75,11 +98,12 @@ else:
 
     # Title of the app
     st.title("Service Desk Chat Application")
-    st.text("Service desk application that can heklp with user's technical queries.")
+    """st.text("Service desk application that can heklp with user's technical queries.")
     st.text("Raises a service now ticket and then creates a knowledge article for the same.")
     st.text("tech stack - streamlit, langchain, langgraph, openai, servicenow cloud APIs")
     st.text("Uses langchain tools to give the LLM additional capability of creating service now tickets and knowledge articles.")
-    st.text("Ise Tavily to search the web for latest information on the topic.")
+    st.text("Ise Tavily to search the web for latest information on the topic.")"""
+    st.markdown(markdown)
 
     st.session_state.col1, st.session_state.col2 = st.columns([0.3, 0.7])
 

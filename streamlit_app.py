@@ -103,12 +103,13 @@ else:
     st.text("tech stack - streamlit, langchain, langgraph, openai, servicenow cloud APIs")
     st.text("Uses langchain tools to give the LLM additional capability of creating service now tickets and knowledge articles.")
     st.text("Ise Tavily to search the web for latest information on the topic.")"""
-    st.markdown(markdown)
 
-    st.session_state.col1, st.session_state.col2 = st.columns([0.3, 0.7])
 
-    # Input form for sending a new message
+    st.session_state.col1, st.session_state.col2, st.session_state.col1 = st.columns([0.3, 0.2,0.5])
     with st.session_state.col1:
+        st.markdown(markdown)
+    # Input form for sending a new message
+    with st.session_state.col2:
         with st.form("message_form", clear_on_submit=True):
             user = st.text_input("Your name", key="name", max_chars=50, value=data["entry"][0]["resource"]["name"][0]["given"][0])
             user_query = st.text_input("Message", key="user_query", max_chars=500)
@@ -146,7 +147,7 @@ else:
                 result = st.session_state.abot.graph.invoke({"messages": messages}, st.session_state.thread)
                 add_message("agent", result['messages'][-1].content)
 
-    with st.session_state.col2:
+    with st.session_state.col3:
         # Display the chat messages
         st.subheader("Chat History")
         display_messages()

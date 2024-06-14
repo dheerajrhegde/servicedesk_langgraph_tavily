@@ -46,8 +46,8 @@ else:
 
     st.write(data)
 
-    st.write(data["patient"]["valueString"])
-    user_id = data["patient"]["valueString"]
+    st.write(data["parameter"][0]["valueString"])
+    user_id = data["parameter"][0]["valueString"]
 
     headers = {"Authorization":
                    f"Bearer {token}"

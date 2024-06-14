@@ -40,7 +40,7 @@ else:
     url = "https://fhir.cigna.com/PatientAccess/v1-devportal/Patient"
     jsonString = requests.get(url, headers=headers)
     data = json.loads(jsonString.content)
-    st.write(str(st.session_state.token))
+    st.write(st.session_state.token["access_token"])
     st.write(data)
 
     # Initialize session state to store chat messages

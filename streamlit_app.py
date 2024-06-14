@@ -54,18 +54,14 @@ else:
                    f"Bearer {token}"
                }
 
-    url = "https://fhir.cigna.com/PatientAccess/v1-devportal/Patient/"+user_id
+    url = f"https://fhir.cigna.com/PatientAccess/v1-devportal/patient/v1/patients/{user_id}"
+
     st.write(url)
     jsonString = requests.get(url, headers=headers)
     data = json.loads(jsonString.content)
     st.write(data)
 
-    user_id = data["link"][0]["other"]["reference"]
-    url = "https://fhir.cigna.com/PatientAccess/v1-devportal/Patient/" + user_id
-    st.write(url)
-    jsonString = requests.get(url, headers=headers)
-    data = json.loads(jsonString.content)
-    st.write(data)
+
 
     # Initialize session state to store chat messages
     if "user_queries" not in st.session_state:

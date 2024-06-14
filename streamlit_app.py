@@ -14,7 +14,6 @@ st.set_page_config(
 
 markdown="""
 ## Overview
-
 This application is designed to provide automated support for users' technical issues by:
 - Raising ServiceNow tickets.
 - Creating knowledge articles based on resolved queries.
@@ -26,7 +25,6 @@ This application is designed to provide automated support for users' technical i
 - Use Cigna Patient Access API to get user information
 
 ## Tech Stack
-
 - **Streamlit**: For building the interactive web application.
 - **Langchain**: To extend the capabilities of the LLM with tools.
 - **LangGraph**: For managing workflows and integrations.
@@ -99,7 +97,7 @@ else:
     # Title of the app
     st.title("Service Desk Chat Application")
 
-    st.session_state.col1, st.session_state.col2, st.session_state.col3 = st.columns([0.3, 0.2,0.5])
+    st.session_state.col1, st.session_state.col2, st.session_state.col3 = st.columns([0.3, 0.2, 0.5])
     with st.session_state.col1:
         st.markdown(markdown)
     # Input form for sending a new message

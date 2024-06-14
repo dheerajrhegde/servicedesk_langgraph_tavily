@@ -94,7 +94,7 @@ else:
 
             if send_button and  ( send_image or user_query):
                 if send_image:
-                    bytes_data = send_image.getvalue()
+                    bytes_data = send_image.read()
                     user_query = tools_agents.image_to_base64(bytes_data)
                     messages = [HumanMessage(
                         content=[

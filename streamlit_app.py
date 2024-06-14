@@ -36,7 +36,7 @@ if 'token' not in st.session_state:
     st.rerun()
 else:
 
-    url = "https://fhir.cigna.com/Patient?_id" + st.session_state.token
+    url = "https://fhir.cigna.com/Patient?_id" + str(st.session_state.token)
     jsonString = requests.get(url)
     data = json.loads(jsonString.content)
     print(data)

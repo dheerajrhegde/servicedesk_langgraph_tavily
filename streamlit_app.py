@@ -104,7 +104,7 @@ else:
                     messages = [HumanMessage(
                         content=[
                             {"type": "text",
-                             "text": "This is image uploaded by user who needs support. Get information from image"},
+                             "text": "This is image uploaded by user who needs support. Get information from image and continue with chat"},
                             {
                                 "type": "image_url",
                                 "image_url": {"url": base64_string_with_prefix},

@@ -1,4 +1,5 @@
 import tools_agents, datetime, os, requests, json
+from io import StringIO
 from langchain_core.messages import HumanMessage
 import streamlit as st
 from streamlit_oauth import OAuth2Component
@@ -94,7 +95,7 @@ else:
 
             if send_button and  ( send_image or user_query):
                 if send_image:
-                    bytes_data = send_image.read()
+                    bytes_data = StringIO(send_image.getvalue().decode("utf-8"))
                     user_query = tools_agents.image_to_base64(bytes_data)
                     messages = [HumanMessage(
                         content=[

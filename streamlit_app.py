@@ -105,7 +105,7 @@ else:
     st.text("Ise Tavily to search the web for latest information on the topic.")"""
 
 
-    st.session_state.col1, st.session_state.col2, st.session_state.col1 = st.columns([0.3, 0.2,0.5])
+    st.session_state.col1, st.session_state.col2, st.session_state.col3 = st.columns([0.3, 0.2,0.5])
     with st.session_state.col1:
         st.markdown(markdown)
     # Input form for sending a new message

@@ -36,9 +36,10 @@ if 'token' not in st.session_state:
     st.rerun()
 else:
 
-    url = "https://fhir.cigna.com/PatientAccess/v1-devportal/Patient?_id" + str(st.session_state.token)
-    jsonString = requests.get(url)
+    url = "https://fhir.cigna.com/PatientAccess/v1-devportal/Patient"
+    jsonString = requests.get(url, heaaders={"Authorization": f"Bearer {str(st.session_state.token)}"})
     data = json.loads(jsonString.content)
+    st.write(str(st.session_state.token))
     st.write(data)
 
     # Initialize session state to store chat messages

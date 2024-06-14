@@ -98,12 +98,6 @@ else:
 
     # Title of the app
     st.title("Service Desk Chat Application")
-    """st.text("Service desk application that can heklp with user's technical queries.")
-    st.text("Raises a service now ticket and then creates a knowledge article for the same.")
-    st.text("tech stack - streamlit, langchain, langgraph, openai, servicenow cloud APIs")
-    st.text("Uses langchain tools to give the LLM additional capability of creating service now tickets and knowledge articles.")
-    st.text("Ise Tavily to search the web for latest information on the topic.")"""
-
 
     st.session_state.col1, st.session_state.col2, st.session_state.col3 = st.columns([0.3, 0.2,0.5])
     with st.session_state.col1:

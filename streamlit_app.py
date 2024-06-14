@@ -91,14 +91,19 @@ else:
             send_image = st.file_uploader("Choose a file")
 
             if send_button and  ( send_image or user_query):
+                content = []
                 if send_image:
                     #bytes_data = StringIO(send_image.getvalue().decode("utf-8"))
                     file_bytestream = send_image.getvalue()
                     base64_encoded = base64.b64encode(file_bytestream).decode("utf-8")
 
                     base64_string_with_prefix = f"data:image/png;base64, {base64_encoded}"
-
-                    messages = [HumanMessage(
+                    content.append({"type": "text","text": "This is image uploaded by user who needs support. Get information from image and continue with chat"})
+                    content.append({
+                                "type": "image_url",
+                                "image_url": {"url": base64_string_with_prefix},
+                            })
+                    """ messages = [HumanMessage(
                         content=[
                             {"type": "text",
                              "text": "This is image uploaded by user who needs support. Get information from image and continue with chat"},
@@ -107,10 +112,11 @@ else:
                                 "image_url": {"url": base64_string_with_prefix},
                             },
                         ],
-                    )]
+                    )]"""
                 if user_query:
-                    messages = [tools_agents.HumanMessage(content=user_query)]
-
+                    content.append(user_query)
+                    #messages = [tools_agents.HumanMessage(content=user_query)]
+                messages = [tools_agents.HumanMessage(content=content)]
                 result = st.session_state.abot.graph.invoke({"messages": messages}, st.session_state.thread)
                 add_message("agent", result['messages'][-1].content)
 

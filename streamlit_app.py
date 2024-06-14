@@ -36,7 +36,7 @@ if 'token' not in st.session_state:
     st.rerun()
 else:
     token = str(st.session_state.token)
-    headers = {"Authorization": f"Bearer {token}"}
+    headers = {"Authorization": f"Bearer {st.session_state.token["access_token"]}"}
     url = "https://fhir.cigna.com/PatientAccess/v1-devportal/Patient"
     jsonString = requests.get(url, headers=headers)
     data = json.loads(jsonString.content)

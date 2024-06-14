@@ -99,13 +99,15 @@ else:
                     file_bytestream = send_image.getvalue()
                     base64_encoded = base64.b64encode(file_bytestream).decode("utf-8")
 
+                    base64_string_with_prefix = f"data:image/png;base64, {base64_encoded}"
+
                     messages = [HumanMessage(
                         content=[
                             {"type": "text",
                              "text": "This is image uploaded by user who needs support. Get information from image"},
                             {
                                 "type": "image_url",
-                                "image_url": {"url": base64_encoded},
+                                "image_url": {"url": base64_string_with_prefix},
                             },
                         ],
                     )]

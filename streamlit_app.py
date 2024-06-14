@@ -52,9 +52,6 @@ else:
     url = f"https://fhir.cigna.com/PatientAccess/v1-devportal/Patient?_id={user_id}"
     jsonString = requests.get(url, headers=headers)
     data = json.loads(jsonString.content)
-    #st.write(data)
-
-    st.write(data["entry"][0]["resource"]["name"][0]["given"][0])
 
     # Initialize session state to store chat messages
     if "user_queries" not in st.session_state:
@@ -111,7 +108,7 @@ else:
                             },
                         ],
                     )]
-                else:
+                if user_query:
                     messages = [tools_agents.HumanMessage(content=user_query)]
 
                 result = st.session_state.abot.graph.invoke({"messages": messages}, st.session_state.thread)

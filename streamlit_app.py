@@ -122,19 +122,10 @@ else:
                                 "type": "image_url",
                                 "image_url": {"url": base64_string_with_prefix},
                             })
-                    """ messages = [HumanMessage(
-                        content=[
-                            {"type": "text",
-                             "text": "This is image uploaded by user who needs support. Get information from image and continue with chat"},
-                            {
-                                "type": "image_url",
-                                "image_url": {"url": base64_string_with_prefix},
-                            },
-                        ],
-                    )]"""
+                    
                 if user_query:
                     content.append(user_query)
-                    
+
                 messages = [tools_agents.HumanMessage(content=content)]
                 result = st.session_state.abot.graph.invoke({"messages": messages}, st.session_state.thread)
                 add_message("agent", result['messages'][-1].content)

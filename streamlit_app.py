@@ -134,7 +134,7 @@ else:
                     )]"""
                 if user_query:
                     content.append(user_query)
-                    #messages = [tools_agents.HumanMessage(content=user_query)]
+                    
                 messages = [tools_agents.HumanMessage(content=content)]
                 result = st.session_state.abot.graph.invoke({"messages": messages}, st.session_state.thread)
                 add_message("agent", result['messages'][-1].content)

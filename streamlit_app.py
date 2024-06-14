@@ -1,4 +1,4 @@
-import tools_agents, datetime, os, requests, json
+import tools_agents, datetime, os, requests, json, base64
 from io import StringIO
 from langchain_core.messages import HumanMessage
 import streamlit as st
@@ -95,15 +95,17 @@ else:
 
             if send_button and  ( send_image or user_query):
                 if send_image:
-                    bytes_data = StringIO(send_image.getvalue().decode("utf-8"))
-                    user_query = tools_agents.image_to_base64(bytes_data)
+                    #bytes_data = StringIO(send_image.getvalue().decode("utf-8"))
+                    file_bytestream = send_image.getvalue()
+                    base64_encoded = base64.b64encode(file_bytestream).decode("utf-8")
+
                     messages = [HumanMessage(
                         content=[
                             {"type": "text",
                              "text": "This is image uploaded by user who needs support. Get information from image"},
                             {
                                 "type": "image_url",
-                                "image_url": {"url": image_data},
+                                "image_url": {"url": base64_encoded},
                             },
                         ],
                     )]

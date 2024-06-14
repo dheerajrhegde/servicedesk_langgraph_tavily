@@ -43,23 +43,15 @@ else:
     url = "https://fhir.cigna.com/PatientAccess/v1-devportal/$userinfo"
     jsonString = requests.get(url, headers=headers)
     data = json.loads(jsonString.content)
-    st.write(st.session_state.token["access_token"])
-
-    st.write(data)
-
-    st.write(data["parameter"][0]["valueString"])
     user_id = data["parameter"][0]["valueString"]
 
     headers = {"Authorization":
                    f"Bearer {token}"
                }
-
     url = f"https://fhir.cigna.com/PatientAccess/v1-devportal/Patient?_id={user_id}"
-
-    st.write(url)
     jsonString = requests.get(url, headers=headers)
     data = json.loads(jsonString.content)
-    st.write(data)
+    #st.write(data)
 
     st.write(data["entry"][0]["resource"]["name"][0]["given"][0])
 
@@ -95,7 +87,7 @@ else:
     # Input form for sending a new message
     with st.session_state.col1:
         with st.form("message_form", clear_on_submit=True):
-            user = st.text_input("Your name", key="name", max_chars=50, value="User")
+            user = st.text_input("Your name", key="name", max_chars=50, value=data["entry"][0]["resource"]["name"][0]["given"][0])
             user_query = st.text_input("Message", key="user_query", max_chars=500)
             send_button = st.form_submit_button("Send")
 

@@ -54,7 +54,7 @@ else:
                    f"Bearer {token}"
                }
 
-    url = f"https://fhir.cigna.com/PatientAccess/v1-devportal/patient/v1/patients/{user_id}"
+    url = f"https://fhir.cigna.com/PatientAccess/v1-devportal/patients/{user_id}"
 
     st.write(url)
     jsonString = requests.get(url, headers=headers)

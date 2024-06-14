@@ -13,18 +13,18 @@ st.set_page_config(
 )
 
 markdown="""
-## Overview
+### Overview
 This application is designed to provide automated support for users' technical issues by:
 - Raising ServiceNow tickets.
 - Creating knowledge articles based on resolved queries.
 - Using a Language Model (LLM) for intelligent responses.
 - Fetching the latest information on technical topics.
 
-## Cigna API Integration
+### Cigna API Integration
 - Use CIgna Authorization API endpoint to authenticate user
 - Use Cigna Patient Access API to get user information
 
-## Tech Stack
+### Tech Stack
 - **Streamlit**: For building the interactive web application.
 - **Langchain**: To extend the capabilities of the LLM with tools.
 - **LangGraph**: For managing workflows and integrations.
@@ -122,7 +122,7 @@ else:
                                 "type": "image_url",
                                 "image_url": {"url": base64_string_with_prefix},
                             })
-                    
+
                 if user_query:
                     content.append(user_query)
 

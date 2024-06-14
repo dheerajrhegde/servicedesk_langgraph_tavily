@@ -39,7 +39,8 @@ else:
     headers = {"Authorization":
                    f"Bearer {token}"
                }
-    url = "https://fhir.cigna.com/PatientAccess/v1/$userinfo"
+    #url = "https://fhir.cigna.com/PatientAccess/v1/$userinfo"
+    url = "https://fhir.cigna.com/PatientAccess/v1-devportal/$userinfo"
     jsonString = requests.get(url, headers=headers)
     data = json.loads(jsonString.content)
     st.write(st.session_state.token["access_token"])
@@ -53,8 +54,8 @@ else:
                    f"Bearer {token}"
                }
 
-    url = "https://fhir.cigna.com/Patient/"+user_id
-    print(url)
+    url = "https://fhir.cigna.com/PatientAccess/v1-devportal/Patient/"+user_id
+    st.write(url)
     jsonString = requests.get(url, headers=headers)
     data = json.loads(jsonString.content)
     st.write(data)

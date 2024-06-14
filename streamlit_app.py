@@ -61,7 +61,7 @@ else:
     data = json.loads(jsonString.content)
     st.write(data)
 
-
+    st.write(data["entry"][0]["resource"]["name"][0]["given"][0])
 
     # Initialize session state to store chat messages
     if "user_queries" not in st.session_state:

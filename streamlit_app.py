@@ -43,6 +43,9 @@ else:
     jsonString = requests.get(url, headers=headers)
     data = json.loads(jsonString.content)
     st.write(st.session_state.token["access_token"])
+
+    st.write(data)
+
     st.write(data["patient"]["valueString"])
     user_id = data["patient"]["valueString"]
 

@@ -5,3 +5,4 @@ tavily-python
 typing
 langchain-community
 streamlit
+streamlit-oauth

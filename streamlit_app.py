@@ -52,6 +52,7 @@ else:
     url = f"https://fhir.cigna.com/PatientAccess/v1-devportal/Patient?_id={user_id}"
     jsonString = requests.get(url, headers=headers)
     data = json.loads(jsonString.content)
+    data["entry"][0]["resource"]["name"][0]["given"][0]
 
     # Initialize session state to store chat messages
     if "user_queries" not in st.session_state:
@@ -73,7 +74,7 @@ else:
             st.write(f"[{message['time']}] {message['user']}: {message['text']}")
 
     # Title of the app
-    st.title("Chat Application")
+    st.title("Service Desk Chat Application")
     st.text("Service desk application that can heklp with user's technical queries.")
     st.text("Raises a service now ticket and then creates a knowledge article for the same.")
     st.text("tech stack - streamlit, langchain, langgraph, openai, servicenow cloud APIs")

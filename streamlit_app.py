@@ -87,8 +87,9 @@ else:
         with st.form("message_form", clear_on_submit=True):
             user = st.text_input("Your name", key="name", max_chars=50, value=data["entry"][0]["resource"]["name"][0]["given"][0])
             user_query = st.text_input("Message", key="user_query", max_chars=500)
-            send_button = st.form_submit_button("Send")
             send_image = st.file_uploader("Choose a file")
+            send_button = st.form_submit_button("Send")
+
 
             if send_button and  ( send_image or user_query):
                 content = []

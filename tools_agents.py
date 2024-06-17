@@ -71,7 +71,7 @@ class ServiceNowKnowledgeArticle(BaseModel):
 
 @tool(args_schema=ServiceNowKnowledgeArticle)
 def create_servicenow_knowledge_article(title, text):
-    """Creates an knowledge article in service now based on the problem and resolution provided"""
+    """Creates a knowledge article in service now based on the problem and resolution provided"""
     payload = {
         "short_description": title,
         "text": text,

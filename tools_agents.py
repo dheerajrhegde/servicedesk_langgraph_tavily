@@ -19,12 +19,22 @@ memory = SqliteSaver.from_conn_string(":memory:")
 class ServiceNowIncident(BaseModel):
     short_description: str = Field(description="Short description of the incident to create in 8 words or less")
     description: str = Field(
-        description="A very detailed step by step description of the conversation that needs ot be converted into an incident and Should be in 500 words or less")
+        description="A very detailed step by step description of the conversation that needs \
+        ot be converted into an incident and Should be in 500 words or less")
 
 
 @tool(args_schema=ServiceNowIncident)
 def create_servicenow_incident(short_description, description):
-    """Creates an incident in service now based on the description provided"""
+    """
+    Creates an incident in ServiceNow based on the provided description.
+
+    Args:
+        short_description (str): Short description of the incident.
+        description (str): Detailed description of the incident.
+
+    Returns:
+        tuple: A tuple containing two incident numbers if successful, otherwise the error message.
+    """
     assignment_group = "0996f38ec89112009d04d87a50caf610"
     contact_type = "Event1"
     u_contact = "0b2c7cf4837a02107ede20d0deaad38e"  # you / contact person -
@@ -71,7 +81,17 @@ class ServiceNowKnowledgeArticle(BaseModel):
 
 @tool(args_schema=ServiceNowKnowledgeArticle)
 def create_servicenow_knowledge_article(title, text):
-    """Creates a knowledge article in service now based on the problem and resolution provided"""
+    """
+    Creates a knowledge article in ServiceNow based on the provided title and text.
+
+    Args:
+        title (str): Title of the knowledge article.
+        text (str): Detailed text content of the knowledge article.
+
+    Returns:
+        str: Success message if the knowledge article is created successfully,
+             otherwise an error message.
+    """
     payload = {
         "short_description": title,
         "text": text,
@@ -109,7 +129,15 @@ client = TavilyClient(os.getenv("TAVILY_API_KEY"))
 
 @tool(args_schema=SearchInput)
 def get_help(query):
-    """Does a search to get detailed instructions/help based on user query"""
+    """
+    Performs a search to get detailed instructions/help based on the user query.
+
+    Args:
+        query (str): Search query to retrieve instructions/help.
+
+    Returns:
+        str: Detailed instructions/help as a series of steps.
+    """
     content = client.search(query, search_depth="advanced")["results"]
 
     # setup prompt
@@ -137,7 +165,25 @@ class AgentState(TypedDict):
 
 
 class Agent:
+    """
+    Represents an agent that interacts with a model and tools based on a state machine graph.
+
+    Attributes:
+        system (str): Optional system information.
+        graph (StateGraph): State machine graph representing agent's behavior.
+        tools (dict): Dictionary of tools available to the agent.
+        model (Model): Model used by the agent to process messages.
+    """
     def __init__(self, model, tools, checkpointer, system=""):
+        """
+        Initializes an Agent instance.
+
+        Args:
+            model (Model): The model used by the agent.
+            tools (list): List of tools available to the agent.
+            checkpointer: Checkpointer object for managing state.
+            system (str, optional): Optional system information.
+        """
         self.system = system
         graph = StateGraph(AgentState)
         graph.add_node("llm", self.call_openai)
@@ -150,7 +196,15 @@ class Agent:
         self.model = model.bind_tools(tools)
 
     def call_openai(self, state: AgentState):
-        # print("Calling open AI")
+        """
+        Calls the OpenAI model to process messages.
+
+        Args:
+            state (AgentState): Current state of the agent.
+
+        Returns:
+            dict: Updated state with processed message.
+        """
         messages = state['messages']
         if self.system:
             messages = [SystemMessage(content=self.system)] + messages
@@ -158,11 +212,28 @@ class Agent:
         return {'messages': [message]}
 
     def exists_action(self, state: AgentState):
-        # print("in exists action")
+        """
+        Checks if an action should be taken based on the last message.
+
+        Args:
+            state (AgentState): Current state of the agent.
+
+        Returns:
+            bool: True if action should be taken, False otherwise.
+        """
         result = state['messages'][-1]
         return len(result.tool_calls) > 0
 
     def take_action(self, state: AgentState):
+        """
+        Executes tool calls based on the last message and returns results.
+
+        Args:
+            state (AgentState): Current state of the agent.
+
+        Returns:
+            dict: Updated state with tool execution results.
+        """
         tool_calls = state['messages'][-1].tool_calls
         results = []
         for t in tool_calls:
@@ -192,7 +263,6 @@ model = ChatOpenAI(model="gpt-4o")
 abot = Agent(model, tool, system=prompt, checkpointer=memory)
 
 
-
 def image_to_base64(image_path):
     # Guess the MIME type of the image
     mime_type, _ = mimetypes.guess_type(image_path)
@@ -207,8 +277,6 @@ def image_to_base64(image_path):
     # Construct the Base64 string with the data URI scheme
     base64_string_with_prefix = f"data:{mime_type};base64, {encoded_string}"
     return base64_string_with_prefix
-
-
 
 def getAgent():
     return abot

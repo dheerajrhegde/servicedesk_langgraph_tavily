@@ -57,23 +57,31 @@ if 'token' not in st.session_state:
     st.session_state.token = result.get('token')
     st.rerun()
 else:
+
+    """
+    Use the token to get user ID. Token represents the user's consent to access their data.
+    So the data returned from the API is for the user who has given consent.
+    """
     token = st.session_state.token["access_token"]
     headers = {"Authorization":
                    f"Bearer {token}"
                }
-    #url = "https://fhir.cigna.com/PatientAccess/v1/$userinfo"
     url = "https://fhir.cigna.com/PatientAccess/v1-devportal/$userinfo"
     jsonString = requests.get(url, headers=headers)
     data = json.loads(jsonString.content)
-    user_id = data["parameter"][0]["valueString"]
+    user_id = data["parameter"][0]["valueString"] # "user_id" is the user's unique identifier
 
+    """
+    Use the token and user ID to get additional information about the user. 
+    Token represents the user's consent to access their data.
+    So the data returned from the API is for the user who has given consent.
+    """
     headers = {"Authorization":
                    f"Bearer {token}"
                }
     url = f"https://fhir.cigna.com/PatientAccess/v1-devportal/Patient?_id={user_id}"
     jsonString = requests.get(url, headers=headers)
     data = json.loads(jsonString.content)
-    #data["entry"][0]["resource"]["name"][0]["given"][0]
 
     # Initialize session state to store chat messages
     if "user_queries" not in st.session_state:
@@ -97,9 +105,15 @@ else:
     # Title of the app
     st.title("Service Desk Chat Application")
 
+    # Creating 3 columns to display the chat interface
+    # Column 1 will display the overview of the application
+    # Column 2 will display the input form for sending a new message
+    # Column 3 will display the chat history
     st.session_state.col1, st.session_state.col2, st.session_state.col3 = st.columns([0.3, 0.2, 0.5])
+
     with st.session_state.col1:
         st.markdown(markdown)
+
     # Input form for sending a new message
     with st.session_state.col2:
         with st.form("message_form", clear_on_submit=True):
@@ -108,11 +122,10 @@ else:
             send_image = st.file_uploader("Choose a file")
             send_button = st.form_submit_button("Send")
 
-
+            # If the send button is clicked, add there is a message or image to send
             if send_button and  ( send_image or user_query):
                 content = []
                 if send_image:
-                    #bytes_data = StringIO(send_image.getvalue().decode("utf-8"))
                     file_bytestream = send_image.getvalue()
                     base64_encoded = base64.b64encode(file_bytestream).decode("utf-8")
 
@@ -132,6 +145,7 @@ else:
                 result = st.session_state.abot.graph.invoke({"messages": messages}, st.session_state.thread)
                 add_message("agent", result['messages'][-1].content)
 
+    # Display the chat history with latest messages on top
     with st.session_state.col3:
         # Display the chat messages
         st.subheader("Chat History")

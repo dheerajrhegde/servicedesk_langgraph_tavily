@@ -58,10 +58,8 @@ if 'token' not in st.session_state:
     st.rerun()
 else:
 
-    """
-    Use the token to get user ID. Token represents the user's consent to access their data.
-    So the data returned from the API is for the user who has given consent.
-    """
+    # Use the token to get user ID. Token represents the user's consent to access their data.
+    # So the data returned from the API is for the user who has given consent.
     token = st.session_state.token["access_token"]
     headers = {"Authorization":
                    f"Bearer {token}"
@@ -71,11 +69,10 @@ else:
     data = json.loads(jsonString.content)
     user_id = data["parameter"][0]["valueString"] # "user_id" is the user's unique identifier
 
-    """
-    Use the token and user ID to get additional information about the user. 
-    Token represents the user's consent to access their data.
-    So the data returned from the API is for the user who has given consent.
-    """
+
+    # Use the token and user ID to get additional information about the user.
+    # Token represents the user's consent to access their data.
+    # So the data returned from the API is for the user who has given consent.
     headers = {"Authorization":
                    f"Bearer {token}"
                }

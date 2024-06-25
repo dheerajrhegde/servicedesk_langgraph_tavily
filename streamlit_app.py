@@ -79,6 +79,8 @@ else:
     url = f"https://fhir.cigna.com/PatientAccess/v1-devportal/Patient?_id={user_id}"
     jsonString = requests.get(url, headers=headers)
     data = json.loads(jsonString.content)
+    print(data)
+    print(headers)
 
     # Initialize session state to store chat messages
     if "user_queries" not in st.session_state:

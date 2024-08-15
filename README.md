@@ -18,10 +18,6 @@ The Service Desk Automation Application provides automated support for users' te
 - **Real-time Help Search:** Provides detailed instructions and help based on user queries using Tavily.
 - **Interactive Chat Interface:** Offers a user-friendly chat interface to communicate with the service desk.
 
-## Cigna API Integration
-
-The application integrates with the Cigna API to authenticate users and access patient information, enhancing user-specific interactions.
-
 ## Tech Stack
 
 - **Streamlit**: For building the interactive web application.

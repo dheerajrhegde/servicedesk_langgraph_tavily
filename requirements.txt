@@ -1,0 +1,9 @@
+langchain
+langgraph
+langchain_openai
+tavily-python
+typing
+langchain-community
+streamlit
+streamlit-oauth
+langgraph-checkpoint-sqlite
